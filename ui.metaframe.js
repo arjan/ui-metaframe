@@ -63,7 +63,8 @@
         doShow: function()
         {
             var self = this;
-            var o = self.trigger.offset();
+            var o = self.trigger.find("*").offset() || self.trigger.offset();
+
             self.popup.css({top: o.top+self.offset.top, left: o.left+self.offset.left, opacity: 0});
             self.popup.show();
             self.popup.animate({opacity: 1});
