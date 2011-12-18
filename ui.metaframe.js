@@ -25,14 +25,16 @@
             self.popup.find(".metaframe-placeholder")
                 .empty().append(el);
 
-            var o2 = self.popup.find(".metaframe-placeholder").offset();
+            var lo = self.popup.find(".metaframe-placeholder").offset();
+            var po = self.popup.offset();
+            var o2 = { left: lo.left - po.left, top: lo.top-po.top };
 
             var prop = function(p) { return self.trigger.css(p) ? parseInt(self.trigger.css(p)) : 0; };
 
             var addTop = prop('borderTopWidth') + prop('padding-top');
             var addLeft = prop('borderLeftWidth') + prop('padding-left');
 
-            self.offset = {top:  - o2.top + addTop, left:  - o2.left + addLeft };
+            self.offset = {top:  -o2.top + addTop, left:  -o2.left + addLeft };
 
             self.showing = false;
             self.showTimer = null;
@@ -58,6 +60,7 @@
                               self.hideTimer = setTimeout(function() { self.doHide(); }, self.timeout);
                           });
             $("body").append(self.popup);
+            if ($.widgetManager) $.widgetManager(self.popup.get(0));
         },
 
         doShow: function()
